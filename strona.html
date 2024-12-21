@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zapisz się na wydarzenie</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+        }
+        form {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        label {
+            font-weight: bold;
+            margin-top: 10px;
+            display: block;
+        }
+        input[type="text"], input[type="email"] {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Zapisz się na wydarzenie</h1>
+
+    <form id="eventForm">
+        <label for="name">Imię:</label>
+        <input type="text" id="name" name="name" required>
+
+        <label for="email">E-mail:</label>
+        <input type="email" id="email" name="email" required>
+
+        <label for="event">Wybierz wydarzenie:</label>
+        <select id="event" name="event" required>
+            <option value="Wydarzenie 1">Wydarzenie 1 - 10 pkt</option>
+            <option value="Wydarzenie 2">Wydarzenie 2 - 20 pkt</option>
+        </select>
+
+        <button type="submit">Zapisz się</button>
+    </form>
+
+    <script>
+        document.getElementById('eventForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const eventName = document.getElementById('event').value;
+            let points = 0;
+
+            // Przydzielanie punktów w zależności od wydarzenia
+            if (eventName === 'Wydarzenie 1') {
+                points = 10;
+            } else if (eventName === 'Wydarzenie 2') {
+                points = 20;
+            }
+
+            // Tworzymy obiekt, który będzie zapisany w Google Sheets
+            const formData = new FormData();
+            formData.append('name', name);
+            formData.append('email', email);
+            formData.append('event', eventName);
+            formData.append('points', points);
+
+            // API do zapisywania w Google Sheets (będzie potrzebna konfiguracja z formularzem Google)
+            fetch('https://docs.google.com/forms/d/18ZttGE-ND-omAaxrOEKdRY4Gg1Cg4vK73IqoejjD7LI/edit?pli=1', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => {
+                alert(`Zapisano na wydarzenie! Otrzymujesz ${points} pkt.`);
+                document.getElementById('eventForm').reset();
+            })
+            .catch(error => {
+                console.error('Błąd zapisu:', error);
+                alert('Wystąpił błąd podczas zapisywania. Spróbuj ponownie.');
+            });
+        });
+    </script>
+
+</body>
+</html>
