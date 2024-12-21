@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zapisy na wydarzenia</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+        }
+
+        h1 {
+            text-align: center;
+            padding: 20px;
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        .table-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: center;
+            border: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        .button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+
+        .status {
+            font-weight: bold;
+            margin-top: 10px;
+            text-align: center;
+        }
+
+        .points-container {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .points-button {
+            margin: 5px;
+            padding: 10px 20px;
+            background-color: #2196F3;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .points-button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Zapisy na wydarzenia</h1>
+
+<div class="table-container">
+    <table>
+        <thead>
+            <tr>
+                <th>Wydarzenie</th>
+                <th>Godzina</th>
+                <th>Punkty</th>
+                <th>Zapisz się</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Wydarzenie 1</td>
+                <td>18:00</td>
+                <td>10 pkt</td>
+                <td><button class="button" id="event1" onclick="zapisy('event1', 10)">Zapisz się</button></td>
+            </tr>
+            <tr>
+                <td>Wydarzenie 2</td>
+                <td>20:00</td>
+                <td>20 pkt</td>
+                <td><button class="button" id="event2" onclick="zapisy('event2', 20)">Zapisz się</button></td>
+            </tr>
+            <tr>
+                <td>Wydarzenie 3</td>
+                <td>22:00</td>
+                <td>15 pkt</td>
+                <td><button class="button" id="event3" onclick="zapisy('event3', 15)">Zapisz się</button></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="status" id="status"></div>
+    
+    <!-- Sekcja przycisków do dodawania punktów -->
+    <div class="points-container">
+        <h2>Dodaj punkty</h2>
+        <button class="points-button" onclick="dodajPunkty(10)">Dodaj 10 punktów</button>
+        <button class="points-button" onclick="dodajPunkty(20)">Dodaj 20 punktów</button>
+    </div>
+
+    <!-- Wyświetlanie zdobytych punktów -->
+    <div class="status" id="punktyStatus">
+        <h3>Łącznie zdobyte punkty: <span id="punkty">0</span></h3>
+    </div>
+</div>
+
+<script>
+    let totalPoints = 0; // Przechowywanie sumy punktów
+
+    function zapisy(eventId, points) {
+        // Wyłącz przycisk, aby zapobiec wielokrotnemu zapisowi
+        document.getElementById(eventId).disabled = true;
+
+        // Wyświetl informację o zapisaniu się
+        document.getElementById("status").innerText = `Zapisano na wydarzenie ${eventId.charAt(5)}! Otrzymujesz ${points} punktów.`;
+    }
+
+    // Funkcja dodająca punkty
+    function dodajPunkty(points) {
+        totalPoints += points; // Dodaj punkty do całkowitej liczby
+        document.getElementById("punkty").innerText = totalPoints; // Zaktualizuj wyświetlaną liczbę punktów
+    }
+</script>
+
+</body>
+</html>
